@@ -1,0 +1,34 @@
+{
+  "name": "hypnotoads",
+  "version": "1.0.0",
+  "description": "workout tracker with elegant data visualization",
+  "main": "server/app.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0",
+    "pg": "^6.1.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.24.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon server/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hypnotoads/hypnotoads.git"
+  },
+  "keywords": [
+    "exercise",
+    "workout",
+    "tracker"
+  ],
+  "author": "hypnotoads",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hypnotoads/hypnotoads/issues"
+  },
+  "homepage": "https://github.com/hypnotoads/hypnotoads#readme"
+}
