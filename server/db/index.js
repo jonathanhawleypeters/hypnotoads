@@ -13,6 +13,7 @@ var db = new Sequelize('hypnotoad', 'fred', 'fred', {
 var User = db.define('User', {
   username: Sequelize.STRING,
   password: Sequelize.STRING
+  //pre-save, password hash
 });
 
 var Workout = db.define('Workout', {
@@ -31,8 +32,8 @@ Workout.belongsTo(User);
 User.hasMany(Workout);
 
 
-User.sync({force: true});
-Workout.sync({force: true});
+User.sync(/*{force: true}*/);
+Workout.sync(/*{force: true}*/);
 // creates these tables in MySQL if they don't already exist. Pass in {force: true}
 // to drop any existing user and message tables and make new ones.
 
