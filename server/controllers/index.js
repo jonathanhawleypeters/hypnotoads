@@ -1,5 +1,4 @@
 var db = require('../db');
-var jwt = require('jwt-simple');
 
 module.exports = {
   workouts: {
@@ -34,9 +33,6 @@ module.exports = {
           res.json(users);
         });
     },
-    post: function (req, res) {
-      //remove
-    },
     signin: function(req, res, next){
       var username = req.body.username;
       var password = req.body.password;
@@ -54,8 +50,7 @@ module.exports = {
         .then(function (user) {
           // create token to send back for auth
           if(user){
-            var token = jwt.encode(user, 'hypnotoad');
-            res.json({token: token});
+            utils.createSession(req, res, user);
           }
         })
         .catch(function (error) {
@@ -83,33 +78,11 @@ module.exports = {
         })
         .then(function (user) {
           // create token to send back for auth
-          var token = jwt.encode(user, 'hypnotoad');
-          res.json({token: token});
+          utils.createSession(req, res, user);
         })
         .catch(function (error) {
           next(error);
         });
-
-
-
-        // check to see if user already exists
-        //findUser({username: username})
-        // findOrCreate returns multiple resutls in an array
-        // use spread to assign the array to function arguments
-        // .spread(function(user, created) {
-        //   if (!created) { // if user already exists, redirect to signin
-        //     res.redirect('/signin');
-        //   } else if (created) {
-        //     db.User.create({ //set password
-        //       username: req.body.username,
-        //       password: req.body.password
-        //     });
-        //     res.sendStatus(201);
-        //   } else { // everything failed
-        //     res.sendStatus(500);
-        //   }
-        // });
-
     }
   }
 };
