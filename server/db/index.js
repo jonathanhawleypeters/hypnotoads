@@ -20,7 +20,8 @@ var Workout = db.define('Workout', {
   datetime: Sequelize.DATE,
   duration: Sequelize.INTEGER,
   category: Sequelize.STRING,
-  comment: Sequelize.STRING
+  comment: Sequelize.STRING,
+  calories: Sequelize.INTEGER
 });
 
 // puts a UserId column on each Message instance
