@@ -2,25 +2,33 @@ var db = require('../db');
 
 module.exports = {
   workouts: {
+    //get all workouts from db?
     get: function (req, res) {
+      //should filter for users
       db.Workout.findAll({include: [db.User]})
         .then(function(workouts) {
           res.json(workouts);
         });
     },
     post: function (req, res) {
-      db.User.findOrCreate({where: {username: req.body.username}})
+      //should just be create
+      db.User.find({where: {username: req.body.username}})
         // findOrCreate returns multiple resutls in an array
         // use spread to assign the array to function arguments
-        .spread(function(user, created) {
+        .then(function(user) {
           db.Workout.create({
             UserId: user.id,
             duration: req.body.duration,
             datetime: req.body.datetime,
             category: req.body.category,
-            comment: req.body.comment
-          }).then(function(workout) {
+            comment: req.body.comment,
+            calories: req.body.calories
+          })
+          .then(function(workout) {
             res.sendStatus(201);
+          })
+          .catch(function(error){
+            console.error(error);
           });
         });
     }
