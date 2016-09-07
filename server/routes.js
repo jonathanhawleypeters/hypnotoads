@@ -1,14 +1,14 @@
 var controller = require('./controllers');
 var router = require('express').Router();
+//Utils
+var utils = require('./utils.js');
 
 //Connect controller methods to their corresponding routes
-router.get('/workouts', controller.workouts.get);
+router.get('/workouts', utils.checkUser, controller.workouts.get);
 
-router.post('/workouts', controller.workouts.post);
+router.post('/workouts', utils.checkUser, controller.workouts.post);
 
-router.get('/users', controller.users.get);
-
-router.post('/users', controller.users.post);
+router.get('/users', utils.checkUser, controller.users.get);
 
 router.post('/signin', controller.users.signin);
 
