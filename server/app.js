@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var db = require('./db');
 
 // Middleware
@@ -9,6 +10,7 @@ var parser = require('body-parser');
 var router = require('./routes.js');
 
 var app = express();
+
 module.exports.app = app;
 
 // Set what we are listening on.
@@ -22,6 +24,12 @@ app.use(parser.json());
 app.use('/', router); //Formerly '/classes'
 // Serve the client files
 app.use(express.static(__dirname + '/../workout-app'));
+
+app.use(session({
+  secret: 'mE2bNdyu2p',
+  resave: false,
+  saveUninitialized: true,
+}));
 
 // If we are being run directly, run the server.
 if (!module.parent) {
