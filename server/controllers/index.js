@@ -61,6 +61,8 @@ module.exports = {
         .catch(function (error) {
           next(error);
         });
+<<<<<<< HEAD
+
     },
     signup: function(req, res, next){
 
