@@ -1,16 +1,32 @@
 var db = require('../db');
+var utils = require('../utils.js');
 
 module.exports = {
   workouts: {
     //get all workouts from db?
-    get: function (req, res) {
+    user: function (req, res) {
       //should filter for users
-      db.Workout.findAll({include: [db.User]})
+      var id = req.url.replace('/workouts/', '');
+      db.Workout.findAll({where: {UserId: id}})
         .then(function(workouts) {
           res.json(workouts);
+        })
+        .catch(function(error){
+          console.error(error);
         });
     },
-    post: function (req, res) {
+
+    all: function (req, res) {
+      db.Workout.findAll()
+        .then(function (workouts) {
+          res.json(workouts);
+        })
+        .catch(function(error){
+          console.error(error);
+        });
+    },
+
+    add: function (req, res) {
       //should just be create
       db.User.find({where: {username: req.body.username}})
         // findOrCreate returns multiple resutls in an array
@@ -31,6 +47,16 @@ module.exports = {
             console.error(error);
           });
         });
+    },
+    delete: function (req, res) {
+      var id = req.url.replace('/workouts/', '');
+      db.Workout.destroy({where: {id: id}})
+        .then(function(workout){
+          res.json(workout);
+        })
+        .catch(function(error){
+          console.error(error);
+        });
     }
   },
 
@@ -41,6 +67,7 @@ module.exports = {
           res.json(users);
         });
     },
+
     signin: function(req, res, next){
       var username = req.body.username;
       var password = req.body.password;
@@ -65,6 +92,7 @@ module.exports = {
           next(error);
         });
     },
+
     signup: function(req, res, next){
 
       //rework this logic to find, then create
