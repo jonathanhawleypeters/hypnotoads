@@ -3,7 +3,7 @@
 angular.module('workout-app', [
   // 'auth',
   // 'profile',
-  // 'post-workout',
+  'post-workout',
   'workout-app.services',
   'ngRoute',
   // 'feed'
@@ -28,7 +28,8 @@ angular.module('workout-app', [
       .when('/postWorkout', {
         templateUrl: 'post/postWorkout.html',
         controller: 'PostWorkoutController',
-        authenticate: true
+        authenticate: false
+        // this needs to be changed back later ***
       })
       //not built yet
       // .when('/feed', {

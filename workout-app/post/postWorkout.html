@@ -1,6 +1,6 @@
 <center>
 {{ workoutsDatabase }}
-For the week of: {{1288323623006 | date:'ww' }} to {{ weekEnd }}<br>
+For the week of: {{ weekStart }} to {{ weekEnd }}<br>
 
 Scheduler that can add workouts:
 <div class="weekly">
@@ -27,10 +27,7 @@ Scheduler that can add workouts:
       <button ng-click="toggle(addNewElement[dayOfWeek[0]])">cancel</button>
       <br><br>
       </form>
-
     </div>
-<!--     <span class="startTime">Start Time</span>
- -->
     <div class="theWorkouts" ng-repeat="workout in dayOfWeek[2]">
     <span ng-show="!workout.hidden" ng-click="toggle(workout)">{{ workout.type }}</span>
 
@@ -44,10 +41,10 @@ Scheduler that can add workouts:
       <button ng-click="addField(newField, workoutFields)">add field</button>
       <input type="text" ng-model="newField">
     </span>
-
+  </div>
 </div>
 
-<!-- Draggable calendar:
+Draggable calendar:
 <div class="weekly calendarWeeklyLayout">
   <div class="weekday calendarWeek" ng-repeat="dayOfWeek in allWorkouts">
     <div class="weekdayName calendarWeekdayName">{{ dayOfWeek[0] }}</div>
@@ -69,6 +66,6 @@ Non draggable calendar:
       </div>
     </div>
   </div>
-</div> -->
+</div>
 
 </center>
