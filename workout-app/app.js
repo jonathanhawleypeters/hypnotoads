@@ -1,9 +1,9 @@
 //TODO: CHECK ACTUAL NAMES FOR CONTROLLERS AND TEMPLATES
 
 angular.module('workout-app', [
-  'auth',
-  'profile',
-  'post-workout',
+  // 'auth',
+  // 'profile',
+  // 'post-workout',
   'workout-app.services',
   'ngRoute',
   // 'feed'
@@ -11,20 +11,20 @@ angular.module('workout-app', [
   .config(function($routeProvider, $httpProvider) {
     $routeProvider
       .when('/signin', {
-        templateUrl: 'auth/signin.html',
+        templateUrl: 'auth/signin/signin.html',
         controller: 'AuthController',
         authenticate: false
       })
       .when('/signup', {
-        templateUrl: 'auth/signup.html',
+        templateUrl: 'auth/signup/signup.html',
         controller: 'AuthController',
         authenticate: false
       })
-      .when('/profile', {
-        templateUrl: 'profile/profile.html',
-        controller: 'ProfileController',
-        authenticate: true
-      })
+      // .when('/profile', {
+      //   templateUrl: 'profile/profile.html',
+      //   controller: 'ProfileController',
+      //   authenticate: true
+      // })
       .when('/postWorkout', {
         templateUrl: 'post/postWorkout.html',
         controller: 'PostWorkoutController',
