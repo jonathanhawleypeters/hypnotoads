@@ -20,16 +20,17 @@ app.set('port', 3000);
 app.use(morgan('dev'));
 app.use(parser.json());
 
-// Set up our routes
-app.use('/', router); //Formerly '/classes'
-// Serve the client files
-app.use(express.static(__dirname + '/../workout-app'));
-
 app.use(session({
   secret: 'mE2bNdyu2p',
   resave: false,
   saveUninitialized: true,
 }));
+
+// Set up our routes
+app.use('/', router); //Formerly '/classes'
+// Serve the client files
+app.use(express.static(__dirname + '/../workout-app'));
+
 
 // If we are being run directly, run the server.
 if (!module.parent) {
