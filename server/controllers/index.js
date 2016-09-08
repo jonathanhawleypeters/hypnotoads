@@ -38,7 +38,10 @@ module.exports = {
             datetime: req.body.datetime,
             category: req.body.category,
             comment: req.body.comment,
-            calories: req.body.calories
+            calories: req.body.calories,
+            year: req.body.year,
+            week: req.body.week,
+            day: req.body.day
           })
           .then(function(workout) {
             res.sendStatus(201);
@@ -75,17 +78,15 @@ module.exports = {
       db.User.find({where: {username: username}})
         .then(function (user) {
           if (!user) {
-            //redirect seems to be disallowed here
-            next(new Error('User doesn\'t exist!'));
-          } else if (user.password !== password) {
-            next(new Error('User or password is wrong'));
-          }
-          return user;
-        })
-        .then(function (user) {
-          // create token to send back for auth
-          if(user){
-            utils.createSession(req, res, user);
+            console.warn('username not found');
+            res.redirect('/signin');
+          } else {
+            if (user.password === password) { //hashing later
+              utils.createSession(req, res, user);
+            } else {
+              console.warn('password does not match');
+              res.redirect('/signin');
+            }
           }
         })
         .catch(function (error) {
