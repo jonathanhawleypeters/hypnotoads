@@ -1,11 +1,14 @@
 angular.module('workout-app.services', [])
+.controller('AuthController', function ($scope, Workouts) {
+  angular.extend($scope, Workouts)
+})
 
 .factory('Workouts', function ($http) {
 
   var getAllWorkoutsForUser = function () {
     return $http({
       method: 'GET',
-      url: '/workouts/:id' 
+      url: '/workouts/:id'
     })
     .then(function (resp) {
       return resp.data;
@@ -54,7 +57,7 @@ angular.module('workout-app.services', [])
       console.log(err)
     })
   }
-  
+
   var addUser = function (username, password) {
     return $http({
       method: 'POST',
