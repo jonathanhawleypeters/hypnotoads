@@ -1,5 +1,7 @@
+var jwt = require('jwt-simple');
+
 module.exports = {
-  decode: function (req, res, next) {
+  checkUser: function (req, res, next) {
     var token = req.headers['x-access-token'];
     var user;
     if (!token) {
