@@ -29,7 +29,7 @@ module.exports = {
 
     add: function (req, res) {
       //should just be create
-      db.User.find({where: {username: req.body.username}})
+      db.User.find({where: {username: req.user.username}})
         // findOrCreate returns multiple resutls in an array
         // use spread to assign the array to function arguments
         .then(function(user) {
