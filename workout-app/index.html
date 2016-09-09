@@ -9,6 +9,15 @@
 
   <body>
 
+  <nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+      <li><a class="selected" href="#/profile">My Profile</a></li>
+      <li><a href="#/postWorkout">Post Workout</a></li>
+      <li><a href="#/feed">Feed</a></li>
+      <li><a href="#signout">Log Out</a></li>
+    </ul>
+  </nav>
+
     <div class="ng-view"></div>
 
     <!-- what version is the d3.v3 minified version in bower?? -->
@@ -20,7 +29,7 @@
     <script src="lib/moment/min/moment.min.js"></script>
     <script src="lib/ngDraggable/ngDraggable.js"></script>
     <script src="lib/angular-editable-text/dist/angular-editable-text.min.js"></script>
-
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
 
 <!-- TODO: add additional controllers -->

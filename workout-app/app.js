@@ -2,8 +2,8 @@
 
 angular.module('workout-app', [
   // 'auth',
-  // 'profile',
-  // 'post-workout',
+   'profile',
+   //'post-workout',
   'workout-app.services',
   'ngRoute',
   // 'feed'
@@ -20,11 +20,11 @@ angular.module('workout-app', [
         controller: 'AuthController',
         authenticate: false
       })
-      // .when('/profile', {
-      //   templateUrl: 'profile/profile.html',
-      //   controller: 'ProfileController',
-      //   authenticate: true
-      // })
+      .when('/profile', {
+        templateUrl: 'profile/profile.html',
+        controller: 'ProfileController',
+        authenticate: true
+      })
       .when('/postWorkout', {
         templateUrl: 'post/postWorkout.html',
         controller: 'PostWorkoutController',
