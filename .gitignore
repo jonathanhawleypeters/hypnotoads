@@ -1,0 +1,11 @@
+.floo
+.flooignore
+node_modules
+workout-app/lib
+diff.log
+workout-app/app.js.orig
+workout-app/services/services.js.orig
+workout-app/services/services_BACKUP_56840.js
+workout-app/services/services_BASE_56840.js
+workout-app/services/services_LOCAL_56840.js
+workout-app/services/services_REMOTE_56840.js

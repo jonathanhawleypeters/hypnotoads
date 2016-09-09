@@ -1,5 +1,6 @@
 var db = require('../db');
 var utils = require('../utils.js');
+var jwt = require('jwt-simple');
 
 module.exports = {
   workouts: {
@@ -78,14 +79,12 @@ module.exports = {
       db.User.find({where: {username: username}})
         .then(function (user) {
           if (!user) {
-            console.warn('username not found');
-            res.redirect('/signin');
+            next(new Error('username not found'));
           } else {
             if (user.password === password) { //hashing later
-              utils.createSession(req, res, user);
+              res.json({ token: jwt.encode(user, 'mE2bNdyu2p') });
             } else {
-              console.warn('password does not match');
-              res.redirect('/signin');
+              next(new Error('password does not match'));
             }
           }
         })
@@ -115,7 +114,7 @@ module.exports = {
         })
         .then(function (user) {
           // create token to send back for auth
-          utils.createSession(req, res, user);
+          res.json({ token: jwt.encode(user, 'mE2bNdyu2p') });
         })
         .catch(function (error) {
           next(error);
