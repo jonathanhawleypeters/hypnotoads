@@ -29,7 +29,16 @@ angular.module('workout-app.services', [])
     });
   }
 
+  $scope.usernamesDatabase = [];
+  $scope.getAllUsernames = function () {
+    Workouts.getUser()
+    .then(function (data) {
+      $scope.usernamesDatabase = data;
+    })
+  }
+
   $scope.loadDatabase();
+  $scope.getAllUsernames();
 })
 .factory('Workouts', function ($http) {
 
@@ -165,7 +174,7 @@ angular.module('workout-app.services', [])
 
     if (category !== undefined) {
       var newWorkout = {
-        username: "test",
+        username: "test2",
         datetime: new Date().toISOString,
         duration: duration,
         category: category,
@@ -179,6 +188,7 @@ angular.module('workout-app.services', [])
       console.log(newWorkout)
       addWorkout(newWorkout);
       this.workoutsDatabase.push(newWorkout)
+      this.getAllUsernames();
 
       // calendarTimes[day].shift()
       // calendarTimes[day].push(newWorkout)
@@ -195,7 +205,7 @@ angular.module('workout-app.services', [])
       this.weekOffset -= 7;
     } else if (direction === "next") {
       if (this.displayedWeek < moment().week()) {
-        this.displayedWeek;
+        this.displayedWeek++;
         this.weekOffset += 7;
       }
     }
