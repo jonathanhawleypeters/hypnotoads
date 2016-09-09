@@ -1,15 +1,30 @@
 var Sequelize = require('sequelize');
 
+if(!process){
+  var match = process.env.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
+  sequelize = new Sequelize(match[5], match[1], match[2], {
+      dialect:  'postgres',
+      protocol: 'postgres',
+      port:     match[4],
+      host:     match[3],
+      logging: false,
+      dialectOptions: {
+          ssl: true
+      }
+  });
+} else {
+  var db = new Sequelize('hypnotoad', 'fred', 'fred', {
+    host: 'localhost',
+    dialect: 'postgres',
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000
+    }
+  });
+}
 
-var db = new Sequelize('hypnotoad', 'fred', 'fred', {
-  host: 'postgres://rfkwziwgshgcto:q5c3fE6b6jcnOtagrsRwd18mce@ec2-54-225-81-90.compute-1.amazonaws.com:5432/dc6lmpr5fle6dc',
-  dialect: 'postgres',
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  }
-});
+
 
 // we define the models we need using js--we don't need a schema file!
 var User = db.define('User', {
