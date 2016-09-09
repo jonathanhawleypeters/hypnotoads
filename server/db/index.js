@@ -1,10 +1,10 @@
 var Sequelize = require('sequelize');
 
-if(process){
+if(process.env.DATABASE_URL){
   sequelize = new Sequelize(process.env.DATABASE_URL, {
   logging: false,
   dialectOptions: {
-    ssl: true 
+    ssl: true
   }
 });
 } else {
