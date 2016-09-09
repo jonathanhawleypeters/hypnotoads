@@ -3,7 +3,7 @@
 angular.module('workout-app', [
   // 'auth',
   // 'profile',
-  'post-workout',
+  // 'post-workout',
   'workout-app.services',
   'ngRoute',
   // 'feed'

@@ -6,8 +6,11 @@ angular.module('workout-app.services', [])
 .controller('PostWorkoutController', function ($scope, Workouts) {
   angular.extend($scope, Workouts)
 
-  $scope.weekStart =  moment().endOf('isoWeek').format("MMM Do");
-  $scope.weekEnd = moment().endOf('isoWeek').format("MMM Do");
+  $scope.displayedWeek = moment().week();
+  $scope.weekOffset = 0;
+
+  $scope.weekStart =  moment().startOf('isoWeek').add($scope.weekOffset, 'days').format("MMM Do");
+  $scope.weekEnd = moment().endOf('isoWeek').add($scope.weekOffset, 'days').format("MMM Do");
 
   // this used for the dragging functionality:
   $scope.onDropComplete = function (index, obj, evt, array) {
@@ -20,7 +23,7 @@ angular.module('workout-app.services', [])
   // this array holds the local copy of all the workouts
   $scope.workoutsDatabase = [];
   $scope.loadDatabase = function () {
-    fact.getWorkouts()
+    Workouts.getAllWorkouts()
     .then(function (data) {
       $scope.workoutsDatabase = data;
     });
@@ -100,7 +103,7 @@ angular.module('workout-app.services', [])
   ////////
 
   var blank = {
-    type: "---",
+    category: "---",
     class: "workoutBlank"
   }
 
@@ -115,10 +118,13 @@ angular.module('workout-app.services', [])
     Sunday: [blank, blank, blank, blank, blank, blank, blank, blank, blank, blank, blank, blank, blank, blank, blank]
   }
 
-  var workoutData = {
+  var workoutCategories = {
     cardio: ['running', 'walking', 'jogging'],
-    weightlifting: ['arms', 'legs', 'full body']
+    weightlifting: ['arms', 'legs', 'full body'],
+    stretching: [],
+    other: []
   }
+
 
   // *** go back into database and update these fields
   var workoutFields = ['duration', 'calories', 'comment']
@@ -154,35 +160,47 @@ angular.module('workout-app.services', [])
   }
 
 
-  var addWorkout = function (category, day) {
-    console.log(type)
-    if (type !== undefined) {
+  var createWorkout = function (category, day, comment, duration, calories) {
+    var year = moment().year();
+
+    if (category !== undefined) {
       var newWorkout = {
+        username: "test",
         datetime: new Date().toISOString,
-        duration: 0,
+        duration: duration,
         category: category,
-        comment: null,
-        calories: 0,
-        year: moment().year(),
-        week: moment().week(),
+        comment: comment,
+        calories: calories,
+        year: year,
+        week: this.displayedWeek,
         day: day,
         hidden: false
       }
-      postWorkout(newWorkout);
+      console.log(newWorkout)
+      addWorkout(newWorkout);
+      this.workoutsDatabase.push(newWorkout)
 
-      allWorkouts[daysOfTheWeek[day]][2].push(newWorkout)
-      calendarTimes[day].shift()
-      calendarTimes[day].push(newWorkout)
+      // calendarTimes[day].shift()
+      // calendarTimes[day].push(newWorkout)
     }
-    // postWorkout(newWorkout)
   }
 
   var toggle = function (item) {
     item.hidden = !item.hidden
   }
 
-  var createNew = function () {
-    console.log('new workout!!!')
+  var changeDisplayedWeek = function (direction) {
+    if (direction === "prev") {
+      this.displayedWeek--;
+      this.weekOffset -= 7;
+    } else if (direction === "next") {
+      if (this.displayedWeek < moment().week()) {
+        this.displayedWeek;
+        this.weekOffset += 7;
+      }
+    }
+    this.weekStart =  moment().startOf('isoWeek').add(this.weekOffset, 'days').format("MMM Do");
+    this.weekEnd = moment().endOf('isoWeek').add(this.weekOffset, 'days').format("MMM Do");
   }
 
   return {
@@ -191,7 +209,17 @@ angular.module('workout-app.services', [])
     addWorkout: addWorkout,
     getUser: getUser,
     checkUser: checkUser,
-    addUser: addUser
+    addUser: addUser,
+    blank: blank,
+    calendarTimes: calendarTimes,
+    workoutCategories: workoutCategories,
+    workoutFields: workoutFields,
+    addNewElement: addNewElement,
+    allWorkouts: allWorkouts,
+    daysOfTheWeek: daysOfTheWeek,
+    createWorkout: createWorkout,
+    toggle: toggle,
+    changeDisplayedWeek: changeDisplayedWeek
   };
 
 })
