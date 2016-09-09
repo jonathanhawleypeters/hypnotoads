@@ -39,4 +39,7 @@ angular.module('workout-app', [
       .otherwise({
         redirectTo:'/profile'
       })
+
+      $httpProvider.interceptors.push('AttachTokens');
+
   });
