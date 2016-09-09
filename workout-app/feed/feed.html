@@ -1,0 +1,47 @@
+<center>
+<h4>For the week of: {{ weekStart }} to {{ weekEnd }}</h4>
+
+<div ng-repeat="user in usernamesDatabase">
+  <br>
+  {{ user.username }}
+  <br>
+  <div class="weeklyLayout">
+    <div class="weekday" ng-repeat="(stringDayOfWeek, numericalDayOfWeek) in daysOfTheWeek">
+
+      <div class="weekdayName">{{ stringDayOfWeek }}</div>
+
+      <div ng-show="!addNewElement[stringDayOfWeek].hidden" ng-repeat="workout in workoutsDatabase | filter: { UserId: user.id, day: numericalDayOfWeek, week: displayedWeek }" class="theWorkouts {{ workout.category }}">
+        <span ng-show="!workout.hidden" ng-click="toggle(workout)" >
+          {{ workout.category }}
+        </span>
+
+        <span ng-show="workout.hidden" class="workoutDetailed">
+          <button ng-click="toggle(workout)">go back</button>
+          <br><br>
+
+          <!-- add functionality to update these fields in the database by clicking to edit the text -->
+          <span ng-repeat="field in workoutFields" ng-if="workout[field]">
+            {{ field }}:
+            <span>
+            {{ workout[field] }}
+            <br>
+            </span>
+          </span>
+
+          <br>
+          <!--
+          (uncomment this to be able to add new fields - will need to reconfigure the database)
+          <button ng-click="addField(newField, workoutFields)">add field</button>
+          <input type="text" ng-model="newField">
+           -->
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button ng-click="changeDisplayedWeek('prev')">Go to previous week!</button>
+<button ng-click="changeDisplayedWeek('next')">Go to next week!</button>
+
+
+</center>

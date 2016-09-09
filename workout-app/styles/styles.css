@@ -1,6 +1,3 @@
-
-
-
   body {
     font-family: 'Muli', verdana, sans-serif;
   }
@@ -15,6 +12,19 @@
     opacity: 0.8;
   }
 
+  input[type="text"] {
+    display: block;
+    margin: 0;
+    width: 70%;
+    font-family: sans-serif;
+    font-size: 10px;
+    appearance: none;
+    box-shadow: none;
+    border-radius: none;
+    color: black;
+  }
+
+
   .endTime {
     position: absolute;
     bottom: 0px;
@@ -23,10 +33,10 @@
 
   }
 
-  .weekly {
+  .weeklyLayout {
     background-color: #9BC1BC;
-    height: 320px;
-    width: 1130px;
+    height: 315px;
+    width: 1060px;
   }
 
   .weekday {
@@ -71,6 +81,9 @@
     background-color: #5CA4A9;
   }
 
+  .theWorkouts:hover {
+    opacity: 0.5;
+  }
 
   .calendarEntries {
     height: 10px;
@@ -113,6 +126,21 @@
       border: solid 3px grey;
   }
 
+  .cardio {
+    background-color: #52AF60;
+  }
+
+  .weightlifting {
+    background-color: #0A8D93;
+  }
+
+  .stretching {
+    background-color: #028090;
+  }
+
+  .other {
+    background-color: #006696;
+  }
 
 /*   *****************************   */
 
@@ -222,7 +250,7 @@ body.application .return-link:hover,
   border-bottom: 1px solid #d7d7d7;
   color: #666;
   font-size: 14px;
-  font-weight: 200;
+  font-weight: bold;
   padding: 7px 10px 4px;
 }
 
