@@ -1,6 +1,8 @@
 var Sequelize = require('sequelize');
+
+
 var db = new Sequelize('hypnotoad', 'fred', 'fred', {
-  host: 'localhost',
+  host: 'postgres://rfkwziwgshgcto:q5c3fE6b6jcnOtagrsRwd18mce@ec2-54-225-81-90.compute-1.amazonaws.com:5432/dc6lmpr5fle6dc',
   dialect: 'postgres',
   pool: {
     max: 5,
