@@ -1,71 +1,113 @@
 <center>
-{{ workoutsDatabase }}
-For the week of: {{1288323623006 | date:'ww' }} to {{ weekEnd }}<br>
+<h4>For the week of: {{ weekStart }} to {{ weekEnd }}</h4>
 
-Scheduler that can add workouts:
-<div class="weekly">
-  <div class="weekday" ng-repeat="dayOfWeek in allWorkouts">
-    <div class="weekdayName">{{ dayOfWeek[0] }}</div>
-    <div class="addNew addNewMain" ng-show="!addNewElement[dayOfWeek[0]].hidden" ng-click="toggle(addNewElement[dayOfWeek[0]])">add new!</div>
-    <div class="addNew" ng-show="addNewElement[dayOfWeek[0]].hidden">
+
+<div class="weeklyLayout">
+  <div class="weekday" ng-repeat="(stringDayOfWeek, numericalDayOfWeek) in daysOfTheWeek">
+
+    <div class="weekdayName">{{ stringDayOfWeek }}</div>
+
+    <div class="addNew addNewMain" ng-show="!addNewElement[stringDayOfWeek].hidden" ng-click="toggle(addNewElement[stringDayOfWeek])">add new!</div>
+
+    <div class="addNew" ng-show="addNewElement[stringDayOfWeek].hidden">
       <br>
       category:
       <br>
       <form>
-      <select name="workoutCategory" ng-model="category">
-        <option ng-repeat="(cat, types) in workoutData" value="{{ cat }}">{{ cat }}</option>
-      </select>
-      <br><br>
-      workout:
-      <br>
-      <select name="workoutType" ng-model="type">
-        <option ng-repeat="type in workoutData[category]" value="{{ type }}">{{ type }}</option>
-      </select>
-      <br><br>
-      <button ng-click="addWorkout(dayOfWeek[0], type); toggle(addNewElement[dayOfWeek[0]])">add workout!</button>
-      <br>
-      <button ng-click="toggle(addNewElement[dayOfWeek[0]])">cancel</button>
-      <br><br>
+        <select name="workoutCategory" ng-model="category">
+          <option ng-repeat="(cat, types) in workoutCategories" value="{{ cat }}">{{ cat }}</option>
+
+        </select>
+        <br><br>
+        <!--
+        (uncomment this to add nested workout types within each category)
+        workout:
+        <br>
+        <select name="workoutType" ng-model="type">
+          <option ng-repeat="type in workoutCategories[category]" value="{{ type }}"> {{ type }}</option>
+        </select>
+        <br><br>
+        -->
+        <!-- can this be refactored? -->
+        <div>
+          duration (in minutes):
+          <br>
+          <input type="text" ng-model="duration">
+        </div>
+
+        <div>
+          calories burned:
+          <br>
+          <input type="text" ng-model="calories">
+        </div>
+
+        <div>
+          reflection/comments:
+          <br>
+          <input type="text" ng-model="comment">
+        </div>
+
+        <button ng-click="createWorkout(category, numericalDayOfWeek, comment, duration, calories); toggle(addNewElement[stringDayOfWeek])">add workout!</button>
+        <br>
+
+        <button ng-click="toggle(addNewElement[stringDayOfWeek])">cancel</button>
+        <br><br>
       </form>
-
     </div>
-<!--     <span class="startTime">Start Time</span>
- -->
-    <div class="theWorkouts" ng-repeat="workout in dayOfWeek[2]">
-    <span ng-show="!workout.hidden" ng-click="toggle(workout)">{{ workout.type }}</span>
-
-    <span ng-show="workout.hidden" class="workoutDetailed">
-      <button ng-click="toggle(workout)">go back</button>
-      <br><br>
-      <span ng-repeat="field in workoutFields">
-        {{ field }}: <span editable-text="workout[field]" placeholder="[click to edit]"> <br></span>
+<!--
+<nav></nav>eed to add filter to only show current user -->
+    <div ng-show="!addNewElement[stringDayOfWeek].hidden" ng-repeat="workout in workoutsDatabase | filter: { day: numericalDayOfWeek, week: displayedWeek }" class="theWorkouts {{ workout.category }}">
+      <span ng-show="!workout.hidden" ng-click="toggle(workout)" >
+        {{ workout.category }}
       </span>
-      <br>
-      <button ng-click="addField(newField, workoutFields)">add field</button>
-      <input type="text" ng-model="newField">
-    </span>
 
+      <span ng-show="workout.hidden" class="workoutDetailed">
+        <button ng-click="toggle(workout)">go back</button>
+        <br><br>
+
+        <!-- add functionality to update these fields in the database by clicking to edit the text -->
+        <span ng-repeat="field in workoutFields" ng-if="workout[field]">
+          {{ field }}:
+          <span>
+          {{ workout[field] }}
+          <br>
+          </span>
+        </span>
+
+        <br>
+        <!--
+        (uncomment this to be able to add new fields - will need to reconfigure the database)
+        <button ng-click="addField(newField, workoutFields)">add field</button>
+        <input type="text" ng-model="newField">
+         -->
+      </span>
+    </div>
+
+  </div>
 </div>
 
-<!-- Draggable calendar:
-<div class="weekly calendarWeeklyLayout">
-  <div class="weekday calendarWeek" ng-repeat="dayOfWeek in allWorkouts">
+<button ng-click="changeDisplayedWeek('prev')">Go to previous week!</button>
+<button ng-click="changeDisplayedWeek('next')">Go to next week!</button>
+<!--
+Draggable calendar:
+<div class="weeklyLayout calendarWeeklyLayout">
+  <div class="weekday calendarWeek" ng-repeat="(stringDayOfWeek, numericalDayOfWeek) in daysOfTheWeek">
     <div class="weekdayName calendarWeekdayName">{{ dayOfWeek[0] }}</div>
     <div ng-repeat="blank in calendarTimes[dayOfWeek[0]] track by $index" class="calendarEntries {{ blank.class }}" ng-drop="true" ng-drop-success="onDropComplete($index, $data, $event, calendarTimes[dayOfWeek[0]])">
       <div ng-drag="true" ng-drag-data="blank">
-        {{ blank.type }}
+        {{ blank.category }}
       </div>
     </div>
   </div>
 </div>
 
 Non draggable calendar:
-<div class="weekly calendarWeeklyLayout">
+<div class="weeklyLayout calendarWeeklyLayout">
   <div class="weekday calendarWeek" ng-repeat="dayOfWeek in allWorkouts">
     <div class="weekdayName calendarWeekdayName">{{ dayOfWeek[0] }}</div>
     <div ng-repeat="blank in calendarTimes[dayOfWeek[0]] track by $index" class="calendarEntries {{ blank.class }}" >
       <div>
-        {{ blank.type }}
+        {{ blank.category }}
       </div>
     </div>
   </div>

@@ -28,14 +28,14 @@ angular.module('workout-app', [
       .when('/postWorkout', {
         templateUrl: 'post/postWorkout.html',
         controller: 'PostWorkoutController',
-        authenticate: true
+        authenticate: false
+        // this needs to be changed back later ***
       })
-      //not built yet
-      // .when('/feed', {
-      //   templateUrl: 'feed/feed.html',
-      //   controller: 'FeedController',
-      //   authenticate: true
-      // })
+      .when('/feed', {
+        templateUrl: 'feed/feed.html',
+        controller: 'PostWorkoutController',
+        authenticate: false
+      })
       .otherwise({
         redirectTo:'/profile'
       })
