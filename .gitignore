@@ -3,6 +3,9 @@
 node_modules
 workout-app/lib
 diff.log
+npm-debug.log
+.DS_Store
+/*.env
 workout-app/app.js.orig
 workout-app/services/services.js.orig
 workout-app/services/services_BACKUP_56840.js
