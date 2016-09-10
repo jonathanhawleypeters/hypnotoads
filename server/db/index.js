@@ -1,13 +1,26 @@
 var Sequelize = require('sequelize');
-var db = new Sequelize('hypnotoad', 'fred', 'fred', {
-  host: 'localhost',
-  dialect: 'postgres',
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
+var db;
+
+if(process.env.DATABASE_URL){
+  db = new Sequelize(process.env.DATABASE_URL, {
+  logging: false,
+  dialectOptions: {
+    ssl: true
   }
 });
+} else {
+  db = new Sequelize('hypnotoad', 'fred', 'fred', {
+    host: 'localhost',
+    dialect: 'postgres',
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000
+    }
+  });
+}
+
+
 
 // we define the models we need using js--we don't need a schema file!
 var User = db.define('User', {
