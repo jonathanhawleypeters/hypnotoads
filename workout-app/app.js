@@ -72,7 +72,7 @@ angular.module('workout-app', [
         data: { username: username, password: password }
       })
       .then(function (res) {
-        console.log('Debug output', res.data.token);
+        // console.log('Debug output', res.data.token);
         $window.localStorage.setItem('hypnotoad', res.data.token);
         $window.localStorage.setItem('username', username);
         $location.path('/profile');
