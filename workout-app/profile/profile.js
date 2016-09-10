@@ -46,7 +46,6 @@ angular.module('profile', [])
       scope: {data: '=chartData'},
       
       link: function (scope, element, attrs) {
-        console.log("scope.data", scope.data);
 
         // Our X scale
         var x = d3.scale.ordinal()
