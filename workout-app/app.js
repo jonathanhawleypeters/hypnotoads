@@ -28,16 +28,16 @@ angular.module('workout-app', [
       .when('/postWorkout', {
         templateUrl: 'post/postWorkout.html',
         controller: 'PostWorkoutController',
-        authenticate: false
+        authenticate: true
         // this needs to be changed back later ***
       })
       .when('/feed', {
         templateUrl: 'feed/feed.html',
         controller: 'PostWorkoutController',
-        authenticate: false
+        authenticate: true
       })
       .otherwise({
-        redirectTo:'/profile'
+        redirectTo:'/feed'
       })
 
       $httpProvider.interceptors.push('AttachTokens');
