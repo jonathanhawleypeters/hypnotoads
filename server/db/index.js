@@ -1,14 +1,15 @@
 var Sequelize = require('sequelize');
+var db;
 
 if(process.env.DATABASE_URL){
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
+  db = new Sequelize(process.env.DATABASE_URL, {
   logging: false,
   dialectOptions: {
     ssl: true
   }
 });
 } else {
-  var db = new Sequelize('hypnotoad', 'fred', 'fred', {
+  db = new Sequelize('hypnotoad', 'fred', 'fred', {
     host: 'localhost',
     dialect: 'postgres',
     pool: {
