@@ -185,7 +185,6 @@ angular.module('workout-app.services', [])
         day: day,
         hidden: false
       }
-      console.log(newWorkout)
       addWorkout(newWorkout);
       this.workoutsDatabase.push(newWorkout)
       this.getAllUsernames();

@@ -72,7 +72,7 @@ angular.module('workout-app', [
         data: { username: username, password: password }
       })
       .then(function (res) {
-        console.log('Debug output', res.data.token);
+        // console.log('Debug output', res.data.token);
         $window.localStorage.setItem('hypnotoad', res.data.token);
         $window.localStorage.setItem('username', username);
         $location.path('/profile');
@@ -97,7 +97,6 @@ angular.module('workout-app', [
       });
     };
     $scope.signout = function () {
-      console.log('logging out');
       $window.localStorage.removeItem('hypnotoad');
       $window.localStorage.removeItem('username');
       $location.path('/signin');
@@ -105,7 +104,6 @@ angular.module('workout-app', [
   })
   .run(function ($rootScope, $location, Auth) {
     $rootScope.$on('$routeChangeStart', function (evt, next, current) {
-      console.log('routeChangeStart in app.js');
       if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
         $location.path('/signin');
       }

@@ -46,7 +46,6 @@ angular.module('profile', [])
       scope: {data: '=chartData'},
       
       link: function (scope, element, attrs) {
-        console.log("scope.data", scope.data);
 
         // Our X scale
         var x = d3.scale.ordinal()
@@ -94,8 +93,6 @@ angular.module('profile', [])
             d.week = +d.week;
            });
 
-          console.log(data[0]);
-
           //combine category data for each week with nest/rollup
           data = d3.nest()
             .key(function(d) { return d.week; })
@@ -113,8 +110,6 @@ angular.module('profile', [])
             })
             .entries(data);
 
-            console.log("entries data", data[0])
-
           //reflatten array with sum values to make it easier to work with
           var flat = data.map(function(d) {
             return d.value = {
@@ -126,16 +121,11 @@ angular.module('profile', [])
             }
           }).reduce(function (d1, d2) {return d1.concat(d2)}, []);
 
-          console.log("flat: ", flat[0]);
-
          // Use values to set our color bands, skip week property
          //use d3.keys to populate keys array above?
           color.domain(d3.keys(flat[0]).filter(function (key) {
               return key !== "week" && key !=="year";
           }));
-
-          console.log("flatzero", flat[0]);
-          console.log("colordomain", color.domain());
           
           flat.forEach(function (d) {
             var y0 = 0;
@@ -148,7 +138,6 @@ angular.module('profile', [])
             });
             d.total = d.types[d.types.length - 1].y1;
           });
-          console.log("after foreach types color", flat[0]);
 
           // Sort by week
 
